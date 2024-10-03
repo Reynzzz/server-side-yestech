@@ -59,7 +59,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       detailsHome : {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       sections : {
         type : Sequelize.JSON

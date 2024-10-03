@@ -16,6 +16,14 @@ const {
 const fs = require("fs");
 const path = require("path");
 const { Op } = require('sequelize');
+function isValidJSON(str) {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 class Controller {
   static async getBanner(req, res) {
     try {
@@ -263,9 +271,10 @@ class Controller {
 
         const formattedData = data.map((product) => ({
           ...product.toJSON(),
-          mainImg: JSON.parse(product.mainImg).map(link => ({ link })),
-          sections: JSON.parse(product.sections),
-          parameters : JSON.parse(product.parameters)
+          mainImg: isValidJSON(product.mainImg) ? JSON.parse(product.mainImg).map(link => ({ link })) : product.mainImg,
+          sections: isValidJSON(product.sections) ? JSON.parse(product.sections) : product.sections,
+          parameters: isValidJSON(product.parameters) ? JSON.parse(product.parameters) : product.parameters
+
       }));
       
 
